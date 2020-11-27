@@ -44,15 +44,16 @@ const students = this.students.map((item)=>{
     return item;
 })
 console.log(students);
-
+return students
 },
 
 
 //get a single student
 getStudent: function(id){
 
-const students = this.students.filter(item=> item.id === id)
+const student = this.students.filter(item=> item.id === id)
 console.log(students);
+return student
 },
 
 
@@ -60,16 +61,18 @@ console.log(students);
 modifyStudent: function(id, newInfo){
 const index = this.students.findIndex(item => item.id === id);
 console.log(index);
-this.students.splice(index,1, newInfo);
-console.log(this.students[index]);
+const modified = this.students.splice(index,1, newInfo);
+console.log(modified);
+return modified;
 },
 
 //Delete Student
 deleteStudent: function(id){
   const index = this.students.findIndex(item => item.id === id);
   console.log(index);
-this.students.splice(index,1);
-console.log(this.students);
+const deleted = this.students.splice(index,1);
+console.log(deleted);
+return deleted;
 },
 
 //employ a staff
@@ -86,10 +89,11 @@ employStaff: function ( name, sex, phone, address, salary ){
 //get all staffs in the school
 getAllStaffs: function(){
 // for example
-const students = this.staffs.map((item)=>{
+const staffs = this.staffs.map((item)=>{
   return item;
 })
 console.log(students);
+return staffs
 },
 
 //get a single staff
@@ -97,27 +101,40 @@ console.log(students);
 getStaff: function(id){
   const staff = this.staffs.filter(item=> item.id === id)
   console.log(staff);
+  return staff;
 },
 
 //modify a staff record
 modifyStaff: function(id, newInfo){
   const index = this.staffs.findIndex(item => item.id === id);
   console.log(index);
-  this.staffs.splice(index,1, newInfo);
-  console.log(this.staffs[index]);
+const  modified = this.staffs.splice(index,1, newInfo);
+  console.log(modified);
+  return modified;
 },
 
 deleteStaff: function(id){
   const index = this.staffs.findIndex(item => item.id === id);
   console.log(index);
-this.staffs.splice(index,1);
-console.log(this.staffs);
+ const deleted = this.staffs.splice(index,1);
+console.log(deleted);
+return deleted;
 },
 
 //check school account balance
 getSchoolAccountBalance: function(){
+let initialVal =0;
+const totalFeesPaid = this.students.reduce((total, item)=>{
+return total + item.feesPaid;
+}, initialVal);
 
+const totalSalaryPaid  = this.staffs.reduce((total, item)=>{
+  return total + item.salary;
+  }, initialVal);
+
+return totalFeesPaid - totalSalaryPaid;
 },
+
 
 //get information about the school
 getInfo: function(){
@@ -137,21 +154,25 @@ const student = this.students.map((item)=>{
 });
 
  console.log( student);   
+ return student;
 },
 
 //get the total
 
 totalFeesBalance(){
-  let initialval =0;
+  let initialVal =0;
 const balance = this.students.reduce((total, item)=>{
 return total + item.feesBalance;
-}, initialval);
+}, initialVal);
 console.log(balance);
+return balance;
 },
 
 //get all students owing fees
 studentsWithsFeesBalance(){
-
+  const students = students.filter(item => item.feesBalance > 0)
+  console.log(students);
+  return students;
 },
 
 
@@ -166,11 +187,26 @@ const staff = this.staffs.map((item) =>{
 })
 
 console.log(staff);
+return staff;
 },
+
+//get the total
+
+totalSalaryBalance(){
+  let initialVal =0;
+const balance = this.staffs.reduce((total, item)=>{
+return total + item.salaryBalance;
+}, initialVal);
+console.log(balance);
+
+return balance;
+},
+
 
 staffsWithSalaryBalance(){
 const staffs = this.staffs.filter(item => item.salaryBalance > 0)
 console.log(staffs);
+return staffs;
 }
 
 
